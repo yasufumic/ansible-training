@@ -1,0 +1,10 @@
+---
+- name: my first playbook to create a user
+  hosts: both
+  tasks:
+  - name: remove the user
+    user:
+      name: user1
+      state: absent
+      remove: yes
+...
