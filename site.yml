@@ -1,0 +1,19 @@
+---
+- name: sample playbook
+  hosts: both
+  vars:
+    pkgname: httpd
+    conf_path: /etc/httpd/conf/httpd.conf
+  tasks:
+  - name: Install Apache web server
+    yum:
+      name: "{{ pkgname }}"
+      state: latest
+  - name: Configure the service
+    template:
+      src: httpd.conf.j2
+      dest: "{{ conf_path }}"
+  - name: Start Apache daemon
+    service:
+       name: "{{ pkgname }}"
+       state: started
