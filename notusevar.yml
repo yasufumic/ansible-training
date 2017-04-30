@@ -1,0 +1,21 @@
+---
+- name: not using var
+  hosts: all
+  tasks:
+  - name: install pkg
+    yum:
+      name: httpd
+      state: latest
+  - name; start httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+  - name: make directory
+    file:
+      path: /var/www/html/pub
+      directory: yes
+      recurse: yes
+      owner: apache
+      group: apache
+      mode: 0755
