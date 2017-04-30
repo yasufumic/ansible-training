@@ -1,0 +1,12 @@
+---
+- name: show the result
+  hosts: database
+  tasks:
+  - name: Install pkg
+    yum:
+      name: banner
+      state: latest
+    register: install_result
+  - name: show msg
+    debug:
+      var: install_result
