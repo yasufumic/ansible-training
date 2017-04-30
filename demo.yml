@@ -1,0 +1,20 @@
+---
+- name: first lab
+  hosts: both
+  tasks:
+  - name: add user
+    user:
+      name: user1
+      password: $6$SALTsalt$U2CBYcKkvybYpEz.vcf.lavH7pZgl5Or9wZCmC8OlhabEKJtav3N4GIrNtsKw83GlX/C95pM8EDhk0G/7nqEG/
+  - name: install EPEL repo
+    yum:
+      name: epel-release
+      state: present
+  - name: install cowsay
+    yum:
+      name: cowsay
+      state: present
+  - name: set motd file
+    copy:
+      content: "Written by Ansible!\n"
+      dest: /etc/motd
