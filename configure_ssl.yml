@@ -1,0 +1,27 @@
+---
+- shell:
+    rpm -q httpd
+  register: rpm_check
+  failed_when: rpm_check.rc == 1
+
+- block:
+  - get_url:
+      url: "{{ https_uri }}"
+      dest: /etc/httpd/conf.d/
+  - file:
+      path: /etc/httpd/conf.d/ssl
+      state: directory
+      mode: 0755
+  - stat:
+      path: /etc/httpd/conf.d/ssl.conf
+    register: ssl_file
+  - shell:
+      mv /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.bak
+    when: ssl_file.stat.exists
+  - unarchive:
+      src: "{{ ssl_uri }}"
+      dest: /etc/httpd/conf.d/ssl/
+      copy: no
+    notify:
+      - restart_services
+  when: rpm_check.rc == 0
