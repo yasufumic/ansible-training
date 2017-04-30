@@ -1,0 +1,13 @@
+---
+- name: add users with loop sentence
+  hosts: all
+  tasks:
+  - name: add users
+    user:
+      name: "{{item}}"
+      state: present
+      groups: wheel
+    with_items:
+      - user1
+      - user2
+      - user3
