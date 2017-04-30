@@ -1,0 +1,25 @@
+---
+- name: using var
+  hosts: all
+  vars:
+    pkgname: httpd
+    filepath: /var/www/html/pub
+    wwwuser: apache
+  tasks:
+  - name: install pkg
+    yum:
+      name: "{{pkgname}}"
+      state: latest
+  - name; start {{pkgname}}
+    service:
+      name: "{{pkgname}}"
+      state: started
+      enabled: yes
+  - name: make {{filepath}} directory
+    file:
+      path: "{{filepath}}"
+      directory: yes
+      recurse: yes
+      owner: "{{wwwuser}}"
+      group: "{{wwwuser}}"
+      mode: 0755
