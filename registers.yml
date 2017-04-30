@@ -1,0 +1,13 @@
+---
+- hosts: web
+  tasks:
+    - name: Install packages on {{ ansible_fqdn }}
+      yum:
+        name: 
+          -  mariadb-server
+          -  httpd
+        state: latest
+      register: result
+    - name: Display the result of the command
+      debug:
+        var: result
