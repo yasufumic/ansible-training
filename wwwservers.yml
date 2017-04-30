@@ -1,0 +1,38 @@
+---
+- name: Webサイトの構築
+  hosts: both
+  tasks:
+  - name: Apache httpdのインストール
+    yum:
+      name: httpd
+      state: installed
+  - name: firewalld のインストール
+    yum:
+      name: firewalld
+      state: installed
+  - name: firewalld サービスの起動
+    service:
+      name: firewalld
+      state: started
+      enabled: True
+  - name: http ポートの open
+    firewalld:
+      service: http
+      state: enabled
+      permanent: true
+      immediate: true
+  - name: httpd サービスの起動
+    service:
+      name: httpd
+      state: started
+      enabled: True
+  - name: index.htmlの設置
+    template:
+      src: index.html.j2
+      dest: /var/www/html/index.html
+    notify: restart httpd
+  handlers:
+  - name: restart httpd
+    service:
+      name: httpd
+      state: restarted
