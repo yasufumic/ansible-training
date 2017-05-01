@@ -1,0 +1,15 @@
+---
+- name: ignore and go ahead
+  hosts: both
+  tasks:
+  - name: install fake pkg
+    yum:
+      name: mypkg
+      state: installed
+    ignore_errors: yes
+  - name: start fake service
+    service:
+      name: mypkg
+      state: started
+      enabled: yes
+    ignore_errors: yes
