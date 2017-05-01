@@ -1,0 +1,21 @@
+---
+- name: checking existense of directory
+  hosts: web
+  tasks:
+  - name: check with stat module
+    stat:
+      path: /mnt/test
+    register: result
+  - name: make directory
+    file:
+      path: /mnt/test
+      state: directory
+      owner: root
+      group: root
+      mode: 0755
+    when: not result.stat.exists
+  - name: delete directory
+    file:
+      path: /mnt/test
+      state: absent
+    when: result.stat.exists
