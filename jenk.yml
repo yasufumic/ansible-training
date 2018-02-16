@@ -1,0 +1,8 @@
+- name: install jenkins with role
+  hosts: web
+  pre_tasks:
+    - yum:
+        name: java-1.8.0-openjdk-devel
+        state: latest
+  roles:
+    - { role: geerlingguy.jenkins }
