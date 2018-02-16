@@ -66,3 +66,15 @@
     with_items:
       - mariadb
       - httpd
+  - name: mariadbの設定
+    mysql_db:
+     name: "wordpress"
+     encoding: "utf8"
+     collation: "utf8_general_ci"
+  - name: mariadb userの設定
+    mysql_user:
+      name: admin
+      password: admin
+      host: localhost
+      priv: '*.*:ALL'
+

@@ -1,6 +1,6 @@
 ---
 - name: first lab
-  hosts: both
+  hosts: web
   tasks:
   - name: add user
     user:
